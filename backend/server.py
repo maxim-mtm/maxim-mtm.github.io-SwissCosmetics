@@ -1,11 +1,12 @@
 from flask import Flask, request, jsonify
 import stripe
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 CORS(app)  # Allows frontend to make requests
 
-stripe.api_key = 'sk_test_51RQD6XRwCHZBt8qq6E1rjL4fioJLpnkXc5crO8JMjKc7bpVcbodzscOqHRC64SsM4WY6YvtAy4FiLIOGpsS7hLrB00gjW5j3kS'  # Replace with your real secret key
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 @app.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
