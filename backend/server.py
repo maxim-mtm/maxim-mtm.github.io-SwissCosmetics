@@ -15,7 +15,7 @@ def create_checkout_session():
 
     try:
         session = stripe.checkout.Session.create(
-            payment_method_types=['card', 'twint', 'klarna', 'giropay'],
+            payment_method_types=['card', 'twint', 'klarna'],
             mode='payment',
             line_items=[{
                 'price': item['id'],
