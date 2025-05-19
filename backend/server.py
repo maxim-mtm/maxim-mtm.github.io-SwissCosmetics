@@ -4,7 +4,7 @@ from flask_cors import CORS
 import os
 
 app = Flask(__name__)
-CORS(app)  # Allows frontend to make requests
+CORS(app)
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
@@ -27,7 +27,7 @@ def create_checkout_session():
         return jsonify({'url': session.url})
     except Exception as e:
         return jsonify({'error': str(e)}), 400
-
+        
 @app.route('/success')
 def success():
     return """
@@ -156,6 +156,6 @@ def cancel():
     </html>
     """
 
-if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 4242))
-    app.run(host='0.0.0.0', port=port)
+#if __name__ == '__main__':
+#    port = int(os.environ.get("PORT", 4242))
+#    app.run(host='0.0.0.0', port=port)
