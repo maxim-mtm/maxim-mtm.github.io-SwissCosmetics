@@ -21,8 +21,8 @@ def create_checkout_session():
                 'price': item['id'],
                 'quantity': item['quantity']
             } for item in items],
-            success_url='http://localhost:4242/success',
-            cancel_url='http://localhost:4242/cancel'
+            success_url='https://maxim-mtm.github.io/swiss-cosmetics/success',
+            cancel_url='https://maxim-mtm.github.io/swiss-cosmetics/cancel'
         )
         return jsonify({'url': session.url})
     except Exception as e:
@@ -87,7 +87,7 @@ def success():
     <body>
       <h1>Payment Successful!</h1>
       <p>Thank you for your purchase.</p>
-      <a href="http://127.0.0.1:5500/shop.html">Continue Shopping</a>
+      <a href="https://maxim-mtm.github.io/swiss-cosmetics/shop.html">Continue Shopping</a>
     </body>
     </html>
     """
@@ -151,7 +151,7 @@ def cancel():
     <body>
       <h1>Payment Cancelled</h1>
       <p>Your transaction was not completed.</p>
-      <a href="http://127.0.0.1:5500/shop.html">Return to Shop</a>
+      <a href="https://maxim-mtm.github.io/swiss-cosmetics/shop.html">Return to Shop</a>
     </body>
     </html>
     """
