@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Swiss Cosmetics - Shop</title>
+  <style>
+    :root {
+      --bg: #181818;
+      --card-bg: #222;
+      --text: #fff;
+      --accent: #ccc;
+      --button-bg: #fff;
+      --button-text: #121212;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 2rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .nav a:hover {
+      color: var(--accent);
+    }
+
+    .cart-toggle {
+      cursor: pointer;
+      background: var(--button-bg);
+      color: var(--button-text);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background 0.3s;
+    }
+
+    .cart-toggle:hover {
+      background: var(--accent);
+    }
+
+    .shop-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      text-align: center;
+      padding: 1rem;
+      width: 250px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 0.8rem;
+    }
+
+    .card button {
+      background: var(--button-bg);
+      color: var(--button-text);
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .card button:hover {
+      background: var(--accent);
+      transform: scale(1.05);
+    }
+
+    /* Cart Drawer */
+    #cartDrawer {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 360px;
+      height: 100%;
+      background-color: #1f1f1f;
+      color: var(--text);
+      box-shadow: -3px 0 10px rgba(0,0,0,0.6);
+      padding: 1.5rem;
+      overflow-y: auto;
+      transition: right 0.4s ease;
+      z-index: 1000;
+    }
+
+    #cartDrawer.open {
+      right: 0;
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .cart-header h2 {
+      font-size: 1.6rem;
+      margin: 0;
+    }
+
+    .cart-close {
+      background: transparent;
+      color: var(--accent);
+      font-size: 1.5rem;
+      border: none;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.3s;
+    }
+
+    .cart-close:hover {
+      color: #fff;
+    }
+
+    .cart-item {
+      margin-bottom: 1rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid #333;
+    }
+
+    .cart-item-name {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .cart-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.4rem;
+    }
+
+    .cart-controls button {
+      background: var(--button-bg);
+      color: var(--button-text);
+      border: none;
+      padding: 0.2rem 0.6rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .cart-total {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    #checkout {
+      margin-top: 1.2rem;
+      background: var(--button-bg);
+      color: var(--button-text);
+      width: 100%;
+      padding: 0.6rem;
+      font-weight: bold;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #checkout:hover {
+      background: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav">
+    <a href="#">← Home</a>
+    <span>Swiss Cosmetics</span>
+    <button class="cart-toggle" onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</button>
+  </div>
+
+  <div class="shop-title">Our Products</div>
+  <div class="container">
+    <div class="card" data-name="Hydrating Serum" data-price="1999" data-id="price_1RQDBdRwCHZBt8qquKMLLh9D">
+      <img src="serum.png" alt="Hydrating Serum">
+      <h3>Hydrating Serum</h3>
+      <p><del>CHF 29.99</del> CHF 19.99</p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+
+    <div class="card" data-name="Rose Face Cream" data-price="2499" data-id="price_1RQE2QRwCHZBt8qqhlJM779y">
+      <img src="facecream.png" alt="Rose Face Cream">
+      <h3>Rose Face Cream</h3>
+      <p>CHF 24.99</p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+
+    <div class="card" data-name="Glow Elixir" data-price="3999" data-id="price_1RQE4QRwCHZBt8qqY7WvqMA6">
+      <img src="glowelixir.png" alt="Glow Elixir">
+      <h3>Glow Elixir</h3>
+      <p>CHF 39.99</p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+  </div>
+
+  <div id="cartDrawer">
+    <div class="cart-header">
+      <h2>Your Cart</h2>
+      <button class="cart-close" onclick="closeCart()">×</button>
+    </div>
+    <div id="cartItems"></div>
+    <div class="cart-total">Total: CHF <span id="cartTotal">0.00</span></div>
+    <button id="checkout">Proceed to Checkout</button>
+  </div>
+
+  <script>
+    const cart = [];
+    const drawer = document.getElementById('cartDrawer');
+    const cartCountEl = document.getElementById('cartCount');
+    const cartItemsEl = document.getElementById('cartItems');
+    const cartTotalEl = document.getElementById('cartTotal');
+
+    function openCart() {
+      drawer.classList.add('open');
+    }
+
+    function closeCart() {
+      drawer.classList.remove('open');
+    }
+
+    function toggleCart() {
+      drawer.classList.toggle('open');
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeCart();
+    });
+
+    function updateCartUI() {
+      cartItemsEl.innerHTML = '';
+      let totalQuantity = 0;
+      let totalPrice = 0;
+
+      cart.forEach((item, index) => {
+        totalQuantity += item.quantity;
+        totalPrice += item.price * item.quantity;
+
+        const itemEl = document.createElement('div');
+        itemEl.className = 'cart-item';
+        itemEl.innerHTML = `
+          <div class="cart-item-name">${item.name}</div>
+          <div>CHF ${(item.price * item.quantity / 100).toFixed(2)}</div>
+          <div class="cart-controls">
+            <button onclick="changeQuantity(${index}, -1)">−</button>
+            <span>${item.quantity}</span>
+            <button onclick="changeQuantity(${index}, 1)">+</button>
+            <button onclick="removeItem(${index})">Remove</button>
+          </div>
+        `;
+        cartItemsEl.appendChild(itemEl);
+      });
+
+      cartCountEl.textContent = totalQuantity;
+      cartTotalEl.textContent = (totalPrice / 100).toFixed(2);
+    }
+
+    function changeQuantity(index, delta) {
+      cart[index].quantity += delta;
+      if (cart[index].quantity <= 0) {
+        cart.splice(index, 1);
+      }
+      updateCartUI();
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    }
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.card');
+        const id = card.dataset.id;
+        const name = card.dataset.name;
+        const price = parseInt(card.dataset.price);
+
+        const existing = cart.find(item => item.id === id);
+        if (existing) {
+          existing.quantity++;
+        } else {
+          cart.push({ id, name, price, quantity: 1 });
+        }
+
+        updateCartUI();
+        if (!drawer.classList.contains('open')) openCart();
+      });
+    });
+
+    document.getElementById('checkout').addEventListener('click', async () => {
+      const response = await fetch('http://localhost:4242/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cart })
+      });
+
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Checkout failed.");
+      }
+    });
+  </script>
+</body>
+</html>
