@@ -21,8 +21,8 @@ def create_checkout_session():
                 'price': item['id'],
                 'quantity': item['quantity']
             } for item in items],
-            success_url='https://maxim-mtm.github.io/swiss-cosmetics/success',
-            cancel_url='https://maxim-mtm.github.io/swiss-cosmetics/cancel'
+            success_url='https://swiss-cosmetics.onrender.com/success',
+            cancel_url='https://swiss-cosmetics.onrender.com/cancel'
         )
         return jsonify({'url': session.url})
     except Exception as e:
